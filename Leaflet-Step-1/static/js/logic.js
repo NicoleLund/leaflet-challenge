@@ -35,26 +35,118 @@ function createMap(earthquakes) {
       zoom: 6,
       layers: [lightmap, earthquakes]
   });
-
-  // // Add tile layer to the map
-  // lightmap.addTo(myMap);
-
-
+  
   //Add control for layers
   L.control.layers(mapbase,overlays).addTo(myMap);
 
-  // // Create a legend 
-  // var legend = L.control({
-  //     position: "bottomright"
-  //   });
+  // Create a legend 
+  var legend = L.control({
+      position: "bottomleft"
+    });
 
-  // // Insert a legend div with the class of "legend"
-  // legend.onAdd = function() {
-  //     var div = L.DomUtil.create("div", "legend");
-  //     return div;
-  //   };
-  //   // Add the legend to the map
-  //   legend.addTo(myMap);
+  // Insert a legend div with the class of "legend"
+  legend.onAdd = function() {
+      var div = L.DomUtil.create("div", "legend");
+      return div;
+    };
+    // Add the legend to the map
+  legend.addTo(myMap);
+
+  var legendContainer = d3.select(".legend");
+  legendContainer
+  .style("background","white");
+
+  legendContainer.append("text")
+    .merge(legendContainer)
+    .text("Earthquake Depth (km)")
+    .style("font-size", "21px")
+    .style("font-weight", "bold");
+
+    // .attr("class","legendTitle");
+  
+  legendContainer.append("br");
+
+  var legendSVG = legendContainer.append("svg")
+    .attr("width", "250")
+    .attr("height", "180");
+  
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",20)
+  .attr("r", 10)
+  .style("fill", "#31a354");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 25)
+  .text("Less than or equal to 10")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",50)
+  .attr("r", 10)
+  .style("fill", "#a1d99b");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 55)
+  .text("10 to 30")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",80)
+  .attr("r", 10)
+  .style("fill", "#ffffb2");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 85)
+  .text("30 to 50")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",110)
+  .attr("r", 10)
+  .style("fill", "#fecc5c");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 115)
+  .text("50 to 70")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",140)
+  .attr("r", 10)
+  .style("fill", "#fd8d3c");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 145)
+  .text("70 to 90")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+  .attr("cx",20)
+  .attr("cy",170)
+  .attr("r", 10)
+  .style("fill", "#e31a1c");
+
+  legendSVG.append("text")
+  .attr("x", 35)
+  .attr("y", 175)
+  .text("Greater than 90")
+  .style("font-size", "18px")
+  .attr("alignment-baseline","middle");
 };
 
 function createMarkers(response) {
