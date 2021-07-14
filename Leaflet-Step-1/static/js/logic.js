@@ -18,10 +18,30 @@ function createMap(earthquakes) {
       accessToken: API_KEY
     });
 
+  var topomap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/outdoors-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: API_KEY
+  });
+
+  var satellitemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/satellite-v9',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: API_KEY
+  });
+
   // Create mapbase object
   var mapbase = {
       "Light map": lightmap,
-      "Dark map": darkmap
+      "Dark map": darkmap,
+      "Topographic map": topomap,
+      "Satellite map": satellitemap
   };
 
   // Create overlays object
@@ -37,7 +57,9 @@ function createMap(earthquakes) {
   });
   
   //Add control for layers
-  L.control.layers(mapbase,overlays).addTo(myMap);
+  L.control.layers(mapbase,overlays, {
+    collapsed: false
+  }).addTo(myMap);
 
   // Create a legend 
   var legend = L.control({
@@ -52,101 +74,104 @@ function createMap(earthquakes) {
     // Add the legend to the map
   legend.addTo(myMap);
 
+  // Construct legend block
   var legendContainer = d3.select(".legend");
   legendContainer
   .style("background","white");
 
+  // Legend title
   legendContainer.append("text")
     .merge(legendContainer)
-    .text("Earthquake Depth (km)")
+    .text(" Earthquake Depth (km)")
     .style("font-size", "21px")
     .style("font-weight", "bold");
-
-    // .attr("class","legendTitle");
-  
+ 
   legendContainer.append("br");
 
+  // Legend contents
   var legendSVG = legendContainer.append("svg")
     .attr("width", "250")
     .attr("height", "180");
   
+  // Add legend elements
   legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",20)
-  .attr("r", 10)
-  .style("fill", "#31a354");
-
+    .attr("cx",20)
+    .attr("cy",20)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#31a354");
   legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 25)
-  .text("Less than or equal to 10")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
-
-  legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",50)
-  .attr("r", 10)
-  .style("fill", "#a1d99b");
-
-  legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 55)
-  .text("10 to 30")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
+    .attr("x", 35)
+    .attr("y", 25)
+    .text("Less than or equal to 10")
+    .style("font-size", "18px")
+    .attr("alignment-baseline","middle");
 
   legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",80)
-  .attr("r", 10)
-  .style("fill", "#ffffb2");
-
+    .attr("cx",20)
+    .attr("cy",50)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#a1d99b");
   legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 85)
-  .text("30 to 50")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
+    .attr("x", 35)
+    .attr("y", 55)
+    .text("10 to 30")
+    .style("font-size", "18px")
+    .attr("alignment-baseline","middle");
 
   legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",110)
-  .attr("r", 10)
-  .style("fill", "#fecc5c");
-
+    .attr("cx",20)
+    .attr("cy",80)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#ffffb2");
   legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 115)
-  .text("50 to 70")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
+    .attr("x", 35)
+    .attr("y", 85)
+    .text("30 to 50")
+    .style("font-size", "18px")
+    .style("stroke","black")
+    .attr("alignment-baseline","middle");
 
   legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",140)
-  .attr("r", 10)
-  .style("fill", "#fd8d3c");
-
+    .attr("cx",20)
+    .attr("cy",110)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#fecc5c");
   legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 145)
-  .text("70 to 90")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
+    .attr("x", 35)
+    .attr("y", 115)
+    .text("50 to 70")
+    .style("font-size", "18px")
+    .attr("alignment-baseline","middle");
 
   legendSVG.append("circle")
-  .attr("cx",20)
-  .attr("cy",170)
-  .attr("r", 10)
-  .style("fill", "#e31a1c");
-
+    .attr("cx",20)
+    .attr("cy",140)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#fd8d3c");
   legendSVG.append("text")
-  .attr("x", 35)
-  .attr("y", 175)
-  .text("Greater than 90")
-  .style("font-size", "18px")
-  .attr("alignment-baseline","middle");
+    .attr("x", 35)
+    .attr("y", 145)
+    .text("70 to 90")
+    .style("font-size", "18px")
+    .attr("alignment-baseline","middle");
+
+  legendSVG.append("circle")
+    .attr("cx",20)
+    .attr("cy",170)
+    .attr("r", 10)
+    .style("stroke","black")
+    .style("fill", "#e31a1c");
+  legendSVG.append("text")
+    .attr("x", 35)
+    .attr("y", 175)
+    .text("Greater than 90")
+    .style("font-size", "18px")
+    .attr("alignment-baseline","middle");
 };
 
 function createMarkers(response) {
@@ -192,7 +217,8 @@ function createMarkers(response) {
          data[i].geometry.coordinates[0]]
         , {
           radius: 10000*data[i].properties.mag,
-          color: markerColor,
+          color: "black",
+          weight: 1,
           fillColor: markerColor,
           fillOpacity: 0.95
         }
@@ -219,8 +245,11 @@ function convertTime(timeStamp) {
 
 // Retrieve Earthquake data and add to map
 
+// All earthquakes in last 30 days
+var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
+
 // All earthquakes in last 7 days
-var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+// var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // All earthquakes in last hour
 // var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
