@@ -64,6 +64,7 @@ function createMarkers(response) {
 
   // Initialize an array to hold markers
   var eathquakeMarkers = [];
+  var markerColor = "";
 
   // Loop through the data array
   for (var i=0;i<data.length;i++) {
@@ -72,15 +73,36 @@ function createMarkers(response) {
     //   data[i].geometry.coordinates[1],
     //   data[i].geometry.coordinates[0]
     // ]);
+    
+    if (data[i].geometry.coordinates[2] <= 10) {
+      markerColor = "#31a354";
+    }
+    else if (data[i].geometry.coordinates[2] <= 30) {
+      markerColor = "#a1d99b";
+    }
+    else if (data[i].geometry.coordinates[2] <= 50) {
+      markerColor = "#ffffb2";
+    }
+    else if (data[i].geometry.coordinates[2] <= 70) {
+      markerColor = "#fecc5c";
+    }
+    else if (data[i].geometry.coordinates[2] <= 90) {
+      markerColor = "#fd8d3c";
+    }
+    else {
+      markerColor = "#e31a1c";
+    }
 
     // Create marker for earthquake
     eathquakeMarkers.push(
-      L.marker(
+      L.circle(
         [data[i].geometry.coordinates[1],
          data[i].geometry.coordinates[0]]
         , {
-          markerColor: "green",
-          shape: "circle"
+          radius: 10000*data[i].properties.mag,
+          color: markerColor,
+          fillColor: markerColor,
+          fillOpacity: 0.95
         }
       )
       .bindPopup(
@@ -91,7 +113,6 @@ function createMarkers(response) {
       )
       );
   };
-
 
   // Create a layer group made from the markers array, pass it into the createMap function
   // console.log(eathquakeMarkers);
@@ -107,9 +128,9 @@ function convertTime(timeStamp) {
 // Retrieve Earthquake data and add to map
 
 // All earthquakes in last 7 days
-// var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // All earthquakes in last hour
-var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+// var earthquake_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
 
 d3.json(earthquake_url, createMarkers);
