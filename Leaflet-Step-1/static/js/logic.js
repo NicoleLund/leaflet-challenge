@@ -85,7 +85,7 @@ function createMarkers(response) {
       )
       .bindPopup(
         "<h3>" + data[i].properties.place + 
-        "</H3><hr>Date & Time: " + data[i].properties.time +
+        "</H3><hr>Date & Time: " + convertTime(data[i].properties.time) +
         "<br>Magnitude: " + data[i].properties.mag +
         "<br>Depth: " + data[i].geometry.coordinates[2]
       )
@@ -98,6 +98,11 @@ function createMarkers(response) {
   createMap(L.layerGroup(eathquakeMarkers));
 };
 
+function convertTime(timeStamp) {
+  dateObj = new Date(timeStamp);
+  dateStr = dateObj.toUTCString();
+  return dateStr;
+}
 
 // Retrieve Earthquake data and add to map
 
