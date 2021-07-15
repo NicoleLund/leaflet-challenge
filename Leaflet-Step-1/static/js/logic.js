@@ -131,7 +131,6 @@ function createMap(earthquakes) {
     .attr("y", 85)
     .text("30 to 50")
     .style("font-size", "18px")
-    .style("stroke","black")
     .attr("alignment-baseline","middle");
 
   legendSVG.append("circle")
