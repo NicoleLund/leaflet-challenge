@@ -9,7 +9,7 @@ Build a responsive webpage map showing USGS recorded earthquakes for the past 30
 |----------|----------|
 | HTML | Javascript |
 | CSS | D3.js |
-| | Leaflet |
+| JSON | Leaflet |
 
 ### Project Content Descriptions
 * a_assignment_instructions: Instructions, data and starter code for completing the assignment.
