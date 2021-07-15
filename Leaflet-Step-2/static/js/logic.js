@@ -46,7 +46,7 @@ function createMap(earthquakes) {
 
   // Create techtonic plate boundaries object
   d3.json("static/data/PB2002_boundaries.json", function(response) {
-    console.log(response.features[0].geometry.coordinates);
+    console.log(response.features);
     
     // Initialize boundary line marker array
     var boundaryLines = [];
@@ -100,6 +100,7 @@ function createMap(earthquakes) {
     // Legend title
     legendContainer.append("h2")
       .merge(legendContainer)
+      .attr("class","center")
       .text(" Earthquake Depth (km)");
   
     // Legend contents

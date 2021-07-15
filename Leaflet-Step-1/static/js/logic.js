@@ -52,7 +52,7 @@ function createMap(earthquakes) {
   // Create the map with the layers
   var myMap = L.map("mapid", {
       center: [41, -110],
-      zoom: 6,
+      zoom: 5,
       layers: [lightmap, earthquakes]
   });
   
@@ -80,13 +80,10 @@ function createMap(earthquakes) {
   .style("background","white");
 
   // Legend title
-  legendContainer.append("text")
+    legendContainer.append("h2")
     .merge(legendContainer)
-    .text(" Earthquake Depth (km)")
-    .style("font-size", "21px")
-    .style("font-weight", "bold");
- 
-  legendContainer.append("br");
+    .attr("class","center")
+    .text(" Earthquake Depth (km)");
 
   // Legend contents
   var legendSVG = legendContainer.append("svg")

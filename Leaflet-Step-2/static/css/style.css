@@ -9,6 +9,10 @@ html {
   width: 100%;
 }
 
+.center {
+  text-align: center;
+}
+
 #mapcontainer {
   display: flex;
   justify-content: center;
