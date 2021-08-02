@@ -1,4 +1,4 @@
-# leaflet-challenge
+# leaflet-earthquakes
 UofA Data Analytics Bootcamp Homework Assignment 17-Leaflet
 
 ### Assignment Description
